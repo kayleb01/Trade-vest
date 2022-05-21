@@ -17,9 +17,9 @@ class CreateContractsTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('min_amount', 8, 2);
-            $table->float('max_amount', 8, 2);
+            $table->float('max_amount', 9, 2);
             $table->integer('weekly_returns');
-            $table->integer('bonus');
+            $table->integer('bonus')->nullable();
             $table->timestamps();
         });
     }

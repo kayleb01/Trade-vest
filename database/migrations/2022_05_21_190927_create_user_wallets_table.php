@@ -18,7 +18,7 @@ class CreateUserWalletsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('contract_id')->constrained()->onDelete('cascade');
             $table->smallInteger('status')->default(0);
-            $table->float('amount', 8, 2);
+            $table->float('amount', 9, 2);
             $table->string('proof')->nullable();
             $table->timestamps();
         });
