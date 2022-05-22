@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserWallet extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'contract_id', 'proof', 'amount', 'status'];
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
+    }
 }
