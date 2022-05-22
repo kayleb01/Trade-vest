@@ -80,7 +80,8 @@ class UserService
 
     public function updateUserDetails(array $userData)
     {
-        $user = Auth::user()->update($userData);
+        $user = Auth::user();
+        $user->update($userData);
         if (!$user) {
             abort(500, 'An error occured, please try again later');
         }
