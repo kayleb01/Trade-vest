@@ -26,7 +26,7 @@ class UpdateWallet extends FormRequest
     public function rules()
     {
         return [
-            'wallet_id' => 'required|exists:user_wallets,id',
+            'transaction_id' => 'required|exists:user_transactions,id',
             'amount' => 'nullable|integer',
             'status' => 'nullable|integer',
             ];

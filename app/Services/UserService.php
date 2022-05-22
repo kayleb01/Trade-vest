@@ -3,16 +3,19 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
     public function register(array $userData)
     {
-        $create = User::create($userData);
-        abort_if(!$create, 500, 'an error occured, please try again later');
-
-        return $create;
+        return DB::transaction(function () use ($userData) {
+            $create = User::create($userData);
+            abort_if(!$create, 500, 'an error occured, please try again later');
+            $create->wallet()->create();
+            return $create;
+        });
     }
 
     public function authenticate(string $username, string $password)
@@ -81,8 +84,7 @@ class UserService
     public function updateUserDetails(array $userData)
     {
         $user = Auth::user();
-        $user->update($userData);
-        if (!$user) {
+        if (!$user->update($userData)) {
             abort(500, 'An error occured, please try again later');
         }
         return $user;

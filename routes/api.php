@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContractController;
-use App\Http\Controllers\Api\UserWalletController;
+use App\Http\Controllers\Api\UserTransactionController;
+use App\Models\UserTransactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +33,9 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::put('update-contract', [ContractController::class, 'update']);
 
     /**------------------------ User Wallet ---------------------- */
-    Route::post('user-deposit', [UserWalletController::class, 'deposit']);
-    Route::post('deposit-proof', [UserWalletController::class, 'uploadProof']);
-    Route::put('wallet/update', [UserWalletController::class, 'updateWallet']);
+    Route::post('user-deposit', [UserTransactionController::class, 'deposit']);
+    Route::post('deposit-proof', [UserTransactionController::class, 'uploadProof']);
+    Route::put('transaction/update', [UserTransactionController::class, 'updateTransaction']);
+    Route::get('user-transactions', [UserTransactionController::class, 'index']);
+    Route::put('confirm-transaction', [UserTransactionController::class, 'confirmTransaction']);
 });

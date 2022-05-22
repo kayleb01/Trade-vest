@@ -16,6 +16,7 @@ class DepositResource extends JsonResource
     {
         return [
             'amount'=> $this->amount,
+            'created_at' => $this->created_at,
             'contract' => new ContractResource($this->contract)
         ];
     }
