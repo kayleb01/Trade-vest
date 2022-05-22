@@ -25,5 +25,8 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware(['jwt.verify'])->group(function () {
     Route::post('update-user', [AuthController::class, 'updateProfile']);
+
+    /** -------------------- Contracts --------------------------- */
     Route::get('contracts', [ContractController::class, 'index']);
+    Route::put('update-contract', [ContractController::class, 'update']);
 });
