@@ -9,10 +9,24 @@ class UserWallet extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_wallets';
+
     protected $fillable = ['user_id', 'contract_id', 'proof', 'amount', 'status'];
+
+    protected $appends = ['ImageUrl'];
 
     public function contract()
     {
         return $this->belongsTo(Contract::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return url('storage/media/proof/'.$this->created_at->format('Y').'/'.$this->created_at->format('m').'/' . $this->proof);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

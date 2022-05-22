@@ -31,8 +31,8 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('contracts', [ContractController::class, 'index']);
     Route::put('update-contract', [ContractController::class, 'update']);
 
-    /**------------ User Wallet --------------- */
-
+    /**------------------------ User Wallet ---------------------- */
     Route::post('user-deposit', [UserWalletController::class, 'deposit']);
-    // Route::post('user-deposit', [UserWalletController::class, 'deposit']);
+    Route::post('deposit-proof', [UserWalletController::class, 'uploadProof']);
+    Route::put('wallet/update', [UserWalletController::class, 'updateWallet']);
 });
