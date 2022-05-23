@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserTransactionController;
@@ -27,6 +28,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware(['jwt.verify'])->group(function () {
     Route::post('update-user', [AuthController::class, 'updateProfile']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
 
     /** -------------------- Contracts --------------------------- */
     Route::get('contracts', [ContractController::class, 'index']);
@@ -38,4 +40,10 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::put('transaction/update', [UserTransactionController::class, 'updateTransaction']);
     Route::get('user-transactions', [UserTransactionController::class, 'index']);
     Route::put('confirm-transaction', [UserTransactionController::class, 'confirmTransaction']);
+
+    /**--------------------------- Admin section ---------------- */
+    Route::get('users', [AdminController::class, 'getUsers']);
+    Route::get('user/{id}', [AdminController::class, 'getUser']);
+    Route::put('update-wallet-user', [AdminController::class, 'updateUserWallet']);
+    Route::delete('delete-user/{user}', [AdminController::class, 'destroy']);
 });

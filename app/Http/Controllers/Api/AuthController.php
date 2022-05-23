@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePassword;
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateProfile;
 use App\Http\Resources\LoginResource;
@@ -51,6 +52,16 @@ class AuthController extends Controller
             [
                 'message' => 'user updated successfully',
                 'data' => new UserResource($this->service->updateUserDetails($request->validated()))
+            ]
+        );
+    }
+
+    public function changePassword(ChangePassword $request)
+    {
+        return response()->json(
+            [
+                'message' => 'password changed successfully',
+                'data' => $this->service->changePassword($request->validated())
             ]
         );
     }
