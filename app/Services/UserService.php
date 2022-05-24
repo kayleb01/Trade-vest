@@ -60,6 +60,7 @@ class UserService
 
         return [
             'user' => $user,
+            'wallet' => $user->wallet,
             'role' => $user->role->name,
             'token' => $token,
             'token_type' => 'bearer',
