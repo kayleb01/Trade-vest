@@ -28,7 +28,7 @@ class BtcAddressController extends Controller
     {
         return response()->json([
             'message' => 'wallet address fetched successfully',
-            'data' => BtcAddress::first()->only('wallet_address')
+            'data' => BtcAddress::first()
         ]);
     }
 

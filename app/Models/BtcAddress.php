@@ -9,5 +9,5 @@ class BtcAddress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['wallet_address'];
+    protected $fillable = ['id', 'wallet_address'];
 }
