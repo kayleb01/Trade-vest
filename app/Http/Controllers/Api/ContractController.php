@@ -20,7 +20,7 @@ class ContractController extends Controller
 
     public function index()
     {
-        $contracts = Contract::select(['name', 'min_amount', 'max_amount', 'weekly_returns', 'bonus', 'category'])
+        $contracts = Contract::select(['id', 'name', 'min_amount', 'max_amount', 'weekly_returns', 'bonus', 'category'])
                                 ->get()
                                 ->groupBy('category');
         return response()->json(
