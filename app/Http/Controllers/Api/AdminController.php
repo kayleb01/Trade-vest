@@ -70,4 +70,12 @@ class AdminController extends Controller
             ]
         );
     }
+
+    public function userTransactions(User $user)
+    {
+        return response()->json([
+            'message' => 'Fetched user transactions',
+            'data' => $user->user_transactions
+        ]);
+    }
 }

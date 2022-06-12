@@ -60,11 +60,13 @@ class UserService
 
         return [
             'user' => $user,
-            'wallet' => $user->wallet,
             'role' => $user->role->name,
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'deposits' => $user->deposits,
+            'earnings' => $user->earnings,
+            'withdrawals' => $user->withdrawals,
         ];
     }
 

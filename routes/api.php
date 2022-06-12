@@ -47,6 +47,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('user/{id}', [AdminController::class, 'getUser']);
     Route::put('update-wallet-user', [AdminController::class, 'updateUserWallet']);
     Route::delete('delete-user/{user}', [AdminController::class, 'destroy']);
+    Route::get('user/{user}/transactions', [AdminController::class, 'userTransactions']);
 
     /**------------------- BTC Address ------------------------- */
     Route::post('wallet/store', [BtcAddressController::class, 'store']);

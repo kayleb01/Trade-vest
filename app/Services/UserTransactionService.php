@@ -45,12 +45,21 @@ class UserTransactionService
             $transaction = UserTransactions::findOrFail($transactionData['transaction_id']);
             abort_if(!$transaction->update($transactionData), 500, 'an error occured please try again later');
 
-            $user_wallet = $transaction->user->wallet;
-            $amount  = ($user_wallet->amount + $transaction->amount);
-            $user_wallet->amount = $amount;
-            $user_wallet->save();
+            $user_deposit = $transaction->user->deposit;
 
-            return $transaction->only(['id', 'status', 'amount', 'user', 'ImageUrl']);
+            //if the user has no deposit, add initial deposit
+            if (!$user_deposit) {
+                $user_deposit->initial = $transaction->amount;
+                $user_deposit->total = $transaction->amount;
+                $user_deposit->save();
+            }
+
+            $amount = ($user_deposit->compunded + $transaction->amount);
+            $user_deposit->compunded = $amount;
+            $user_deposit->total += $amount;
+            $user_deposit->save();
+
+            return $transaction->only(['id', 'status', 'initial', 'compounded', 'total', 'user', 'ImageUrl']);
         });
     }
 }
