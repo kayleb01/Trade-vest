@@ -16,9 +16,9 @@ class LoginResource extends JsonResource
     {
         return [
             'user' => new UserResource($this['user']),
-            'deposit' => $this['user']['deposit'],
-            'earnings' => $this['user']['earnings'],
-            'withdrawals' => $this['user']['withdrawals'],
+            'deposit' => new UserDeposit($this['user']['deposits']),
+            'earnings' => new UserEarning($this['user']['earnings']),
+            'withdrawals' =>  UserWithdrawal::collection($this['user']['withdrawals']),
             'role'=> $this['role'],
             'token' => $this['token'],
             'token_type' => $this['token_type'],

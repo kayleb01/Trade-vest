@@ -11,10 +11,12 @@ class UserService
     public function register(array $userData)
     {
         return DB::transaction(function () use ($userData) {
-            $create = User::create($userData);
-            abort_if(!$create, 500, 'an error occured, please try again later');
-            $create->wallet()->create();
-            return $create;
+            $user = User::create($userData);
+            abort_if(!$user, 500, 'an error occured, please try again later');
+            $user->deposits()->create();
+            $user->earnings()->create();
+            $user->withdrawals()->create();
+            return $user;
         });
     }
 

@@ -95,7 +95,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function withdrawals()
     {
-        return $this->hasOne(UserWithdrawal::class);
+        return $this->hasMany(UserWithdrawal::class);
     }
 
     public function user_transactions()

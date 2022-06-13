@@ -14,7 +14,7 @@ class AddProofToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('proof');
+            $table->string('proof')->nullable();
         });
     }
 
