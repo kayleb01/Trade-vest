@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BtcAddressController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserTransactionController;
-use App\Models\UserTransactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

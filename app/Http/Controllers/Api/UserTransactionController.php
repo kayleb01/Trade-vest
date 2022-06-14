@@ -50,7 +50,6 @@ class UserTransactionController extends Controller
         $user_transaction = auth()->user()
             ->user_transactions()
             ->select(['amount', 'contract_id', 'proof', 'created_at'])
-            ->where('status', 1)
             ->latest()
             ->get();
 
