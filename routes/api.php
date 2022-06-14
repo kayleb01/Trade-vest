@@ -25,14 +25,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+    Route::get('contracts', [ContractController::class, 'index']);
+    Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('update-user', [AuthController::class, 'updateProfile']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
 
     /** -------------------- Contracts --------------------------- */
-    Route::get('contracts', [ContractController::class, 'index']);
     Route::put('update-contract', [ContractController::class, 'update']);
 
     /**------------------------ User Wallet ---------------------- */

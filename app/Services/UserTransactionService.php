@@ -20,7 +20,7 @@ class UserTransactionService
     {
         $user = auth()->user();
 
-        abort_if(!$user->user_transactions, 400, 'you have no transaction to upload proof for');
+        abort_if($user->user_transactions->isEmpty(), 400, 'you have no transaction to upload proof for');
 
         $file = $proof['proof'];
         $file->store('media/proof/'.now()->format('Y').'/'.now()->format('m'), 'public');

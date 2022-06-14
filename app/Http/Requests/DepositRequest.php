@@ -36,6 +36,18 @@ class DepositRequest extends FormRequest
     }
 
     /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'contract_id.exists' => 'Contract ID provided does\'nt exists in our records',
+        ];
+    }
+
+    /**
      * configure the validator's instance
      *
      * @param Validator $validator

@@ -25,7 +25,6 @@ class ProofUpload extends FormRequest
     {
         return [
             'proof' => 'required|image|mimes:png,jpg',
-            'transaction_id' => 'required|exists:user_transactions,id'
         ];
     }
 }
