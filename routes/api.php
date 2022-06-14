@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BtcAddressController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserTransactionController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return response('database migrated');
+});
 Route::post('register', [AuthController::class, 'register']);
     Route::get('contracts', [ContractController::class, 'index']);
     Route::post('login', [AuthController::class, 'login']);
