@@ -7,13 +7,14 @@ use App\Http\Requests\UpdateUserDeposit;
 use App\Http\Requests\UpdateUserEarnings;
 use App\Http\Requests\UpdateUserWithdrawals;
 use App\Http\Resources\AdminUserResource;
+use App\Http\Resources\AdminUsersResource;
 use App\Models\User;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-        abort_if(auth()->user()->role->name !=='admin', 401, 'Unauthorized');
+        abort_if(!auth()->user() || auth()->user()->role->name !=='admin', 401, 'Unauthorized');
     }
 
     public function getUsers()
@@ -25,7 +26,7 @@ class AdminController extends Controller
         return response()->json(
             [
             'message' => 'users fetched successfully',
-            'data' => $users->load(['role'])
+            'data' => AdminUsersResource::collection($users->load(['role']))
             ]
         );
     }
@@ -82,7 +83,7 @@ class AdminController extends Controller
         );
     }
 
-    public function updateUserWithdrawal(UpdateUserWithdrawals $request)
+    public function updateUserWithdrawals(UpdateUserWithdrawals $request)
     {
         $user = User::findOrFail($request->user_id);
 

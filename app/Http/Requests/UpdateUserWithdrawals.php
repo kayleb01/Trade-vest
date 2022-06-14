@@ -13,7 +13,7 @@ class UpdateUserWithdrawals extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->role->name == 'admin';
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateUserWithdrawals extends FormRequest
     public function rules()
     {
         return [
-            //
+           'pending' => 'nullable|integer',
+           'total' => 'nullable|integer'
         ];
     }
 }

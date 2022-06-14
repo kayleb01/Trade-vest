@@ -13,7 +13,7 @@ class UpdateUserEarnings extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->role->name == 'admin';
     }
 
     /**
@@ -25,10 +25,10 @@ class UpdateUserEarnings extends FormRequest
     {
         return [
             'user_id' => 'required|integer',
-            'total' => 'required|integer',
-            'paid' => 'required|integer',
-            'compounded' => 'required|integer',
-            'referral' => 'required|integer',
+            'total' => 'nullable|integer',
+            'paid' => 'nullable|integer',
+            'compounded' => 'nullable|integer',
+            'referral' => 'nullable|integer',
         ];
     }
 }

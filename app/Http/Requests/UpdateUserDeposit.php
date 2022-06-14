@@ -25,11 +25,11 @@ class UpdateUserDeposit extends FormRequest
     {
         return [
             'user_id' => 'required|integer',
-            'total' => 'required|integer',
-            'compounded' => 'required|integer',
-            'initial' => 'required|integer',
-            'top_up' => 'required|integer',
-            'locked' => 'required|integer',
+            'total' => 'nullable|integer',
+            'compounded' => 'nullable|integer',
+            'initial' => 'nullable|integer',
+            'top_up' => 'nullable|integer',
+            'locked' => 'nullable|integer',
         ];
     }
 }

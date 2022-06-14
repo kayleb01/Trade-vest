@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware(['jwt.verify'])->group(function () {
+Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('update-user', [AuthController::class, 'updateProfile']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
 
@@ -45,7 +45,9 @@ Route::middleware(['jwt.verify'])->group(function () {
     /**--------------------------- Admin section ---------------- */
     Route::get('users', [AdminController::class, 'getUsers']);
     Route::get('user/{id}', [AdminController::class, 'getUser']);
-    Route::put('update-wallet-user', [AdminController::class, 'updateUserWallet']);
+    Route::put('user/update-deposit', [AdminController::class, 'UpdateUserDeposit']);
+    Route::put('user/update-earnings', [AdminController::class, 'UpdateUserEarnings']);
+    Route::put('user/update-withdrawals', [AdminController::class, 'UpdateUserWithdrawals']);
     Route::delete('delete-user/{user}', [AdminController::class, 'destroy']);
     Route::get('user/{user}/transactions', [AdminController::class, 'userTransactions']);
 
