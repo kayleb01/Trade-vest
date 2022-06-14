@@ -66,7 +66,7 @@ class UserService
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'deposits' => $user->deposits,
+            'deposits' => $user->deposit,
             'earnings' => $user->earnings,
             'withdrawals' => $user->withdrawals,
         ];

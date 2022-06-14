@@ -13,8 +13,6 @@ class UserTransactions extends Model
 
     protected $fillable = ['user_id', 'contract_id', 'proof', 'amount', 'status', 'type'];
 
-    protected $appends = ['ImageUrl'];
-
     public function contract()
     {
         return $this->belongsTo(Contract::class);

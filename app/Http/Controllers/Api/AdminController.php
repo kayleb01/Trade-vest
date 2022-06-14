@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UpdateWalletRequest;
-use App\Http\Resources\AdminUsers;
+use App\Http\Requests\UpdateUserDeposit;
+use App\Http\Requests\UpdateUserEarnings;
+use App\Http\Requests\UpdateUserWithdrawals;
+use App\Http\Resources\AdminUserResource;
 use App\Models\User;
-use App\Models\UserWallet;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -19,43 +19,83 @@ class AdminController extends Controller
     public function getUsers()
     {
         $users = User::where('role_id', 2)
-            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id'])
+            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof'])
             ->paginate(20);
+
         return response()->json(
             [
             'message' => 'users fetched successfully',
-            'data' => $users->load(['role', 'wallet'])
+            'data' => $users->load(['role'])
             ]
         );
     }
 
     public function getUser($id)
     {
-        $user = User::select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id'])
+        $user = User::query()
+            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof'])
             ->where('id', $id)
             ->first();
+
         return response()->json(
             [
-            'message' => 'user fetched successfully',
-            'data' => $user->load(['role', 'wallet'])
+                'message' => 'user fetched successfully',
+                'data' => new AdminUserResource($user->load(['role', 'deposit', 'earnings', 'withdrawals']))
             ]
         );
     }
 
 
-    public function updateUserWallet(UpdateWalletRequest $request)
+    public function updateUserDeposit(UpdateUserDeposit $request)
     {
-        $users_wallet = UserWallet::where('user_id', $request->user_id)->first();
-        abort_if(!$users_wallet || $users_wallet->amount == 0, 404, 'user has nothing in wallet');
+        $user = User::findOrFail($request->user_id);
 
-        abort_if($request->amount > $users_wallet->amount, 400, 'Amount is greater than available balance');
+        try {
+            $user->deposit()->update($request->validated());
+        } catch (\Exception $e) {
+            return response()->json('an error occured, '.$e->getMessage());
+        }
 
-        $users_wallet->amount = ($users_wallet->amount - $request->amount);
-        $users_wallet->save();
         return response()->json(
             [
-            'message' => 'users fetched successfully',
-            'data' => $users_wallet
+            'message' => 'users deposit updated successfully',
+            'data' => $user->deposit
+            ]
+        );
+    }
+
+    public function updateUserEarnings(UpdateUserEarnings $request)
+    {
+        $user = User::findOrFail($request->user_id);
+
+        try {
+            $user->earnings()->update($request->validated());
+        } catch (\Exception $e) {
+            return response()->json('an error occured, '.$e->getMessage());
+        }
+
+        return response()->json(
+            [
+            'message' => 'users earnings updated successfully',
+            'data' => $user->earnings
+            ]
+        );
+    }
+
+    public function updateUserWithdrawal(UpdateUserWithdrawals $request)
+    {
+        $user = User::findOrFail($request->user_id);
+
+        try {
+            $user->withdrawals()->update($request->validated());
+        } catch (\Exception $e) {
+            return response()->json('an error occured, '.$e->getMessage());
+        }
+
+        return response()->json(
+            [
+            'message' => 'users withdrawals updated successfully',
+            'data' => $user->withdrawals
             ]
         );
     }

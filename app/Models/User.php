@@ -14,6 +14,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $appends = ['ImageUrl'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -83,7 +85,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Role::class);
     }
 
-    public function deposits()
+    public function deposit()
     {
         return $this->hasOne(UserDeposit::class);
     }
@@ -95,11 +97,18 @@ class User extends Authenticatable implements JWTSubject
 
     public function withdrawals()
     {
-        return $this->hasMany(UserWithdrawal::class);
+        return $this->hasOne(UserWithdrawal::class);
     }
 
     public function user_transactions()
     {
         return $this->hasMany(UserTransactions::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->proof != null) {
+            return url('storage/media/proof/'.$this->created_at->format('Y').'/'.$this->created_at->format('m').'/' . $this->proof);
+        }
     }
 }

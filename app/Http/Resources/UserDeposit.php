@@ -15,7 +15,7 @@ class UserDeposit extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this['id'],
+            // 'id' => $this['id'],
             'initial' => $this['initial'],
             'compounded' => $this['compounded'],
             'total' => $this['total'],

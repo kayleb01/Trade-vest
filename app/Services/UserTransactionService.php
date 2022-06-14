@@ -18,17 +18,16 @@ class UserTransactionService
 
     public function uploadProof(array $proof)
     {
-        $transaction = auth()
-                    ->user()
-                    ->user_transactions()
-                    ->findOrFail($proof['transaction_id']);
+        $user = auth()->user();
+
+        abort_if(!$user->user_transactions, 400, 'you have no transaction to upload proof for');
 
         $file = $proof['proof'];
         $file->store('media/proof/'.now()->format('Y').'/'.now()->format('m'), 'public');
-        $transaction->proof = $file->hashName();
-        $transaction->save();
+        $user->proof = $file->hashName();
+        $user->save();
 
-        return $transaction->load('contract');
+        return $user;
     }
 
     public function updateTransaction(array $transactionData)

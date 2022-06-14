@@ -15,7 +15,7 @@ class UserEarning extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this['id'],
+            // 'id' => $this['id'],
             'total' => $this['total'],
             'paid' => $this['paid'],
             'compounded' => $this['compounded'],
