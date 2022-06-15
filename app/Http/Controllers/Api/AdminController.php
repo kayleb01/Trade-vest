@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function getUsers()
     {
         $users = User::where('role_id', 2)
-            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof'])
+            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof', 'updated_at'])
             ->paginate(20);
 
         return response()->json(
@@ -34,7 +34,7 @@ class AdminController extends Controller
     public function getUser($id)
     {
         $user = User::query()
-            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof'])
+            ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof', 'updated_at'])
             ->where('id', $id)
             ->first();
 
