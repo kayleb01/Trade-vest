@@ -108,7 +108,7 @@ class User extends Authenticatable implements JWTSubject
     public function getImageUrlAttribute()
     {
         if ($this->proof != null) {
-            return url('storage/media/proof/'.$this->created_at->format('Y').'/'.$this->created_at->format('m').'/' . $this->proof);
+            return url('storage/media/proof/'.$this->updated_at->format('Y').'/'.$this->updated_at->format('m').'/' . $this->proof);
         }
     }
 }
