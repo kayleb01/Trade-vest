@@ -20,14 +20,17 @@ class AdminController extends Controller
 
     public function getUsers()
     {
-        $users = User::where('role_id', 2)
+        $users = User::query()
             ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof', 'updated_at'])
+            ->with(['user_transactions' => function ($q) {
+                $q->latest();
+            }])
             ->paginate(20);
 
         return response()->json(
             [
             'message' => 'users fetched successfully',
-            'data' => AdminUsersResource::collection($users->load(['role']))
+            'data' => AdminUserResource::collection($users->load(['role']))
             ]
         );
     }

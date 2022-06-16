@@ -22,9 +22,10 @@ class AdminUserResource extends JsonResource
             'phone_number' => $this->phone_number,
             'proof' => $this->ImageUrl,
             'role'=> $this->role->name,
+            'user_transactions' => new UserTransactions($this->user_transactions->first()),
             'deposit' => new UserDeposit($this->deposit),
             'earnings' => new UserEarning($this->earnings),
-            'withdrawals' => new UserWithdrawal($this->withdrawals),
+            'withdrawals' => new UserWithdrawal($this->withdrawals)
         ];
     }
 }
