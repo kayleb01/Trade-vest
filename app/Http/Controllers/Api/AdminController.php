@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function getUsers()
     {
-        $users = User::query()
+        $users = User::where('role_id', 2)
             ->select(['id', 'first_name', 'last_name', 'email', 'phone_number', 'role_id', 'proof', 'updated_at'])
             ->with(['user_transactions' => function ($q) {
                 $q->latest();
