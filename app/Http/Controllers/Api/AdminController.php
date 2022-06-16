@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserEarnings;
 use App\Http\Requests\UpdateUserWithdrawals;
 use App\Http\Resources\AdminUserResource;
 use App\Http\Resources\AdminUsersResource;
+use App\Http\Resources\AdminUserTransactions;
 use App\Models\User;
 
 class AdminController extends Controller
@@ -116,7 +117,7 @@ class AdminController extends Controller
     {
         return response()->json([
             'message' => 'Fetched user transactions',
-            'data' => $user->user_transactions
+            'data' => AdminUserTransactions::collection($user->user_transactions)
         ]);
     }
 }

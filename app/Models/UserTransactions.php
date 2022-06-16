@@ -10,7 +10,7 @@ class UserTransactions extends Model
     use HasFactory;
 
     protected $table = 'user_transactions';
-
+    protected $with = ['contract', 'user'];
     protected $fillable = ['user_id', 'contract_id', 'proof', 'amount', 'status', 'type'];
 
     public function contract()
