@@ -58,8 +58,6 @@ class UserTransactionService
                 $user_deposit->save();
             }
 
-
-
             return $transaction->only(['id', 'status', 'initial', 'compounded', 'total', 'user', 'ImageUrl']);
         });
     }
