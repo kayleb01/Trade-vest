@@ -45,18 +45,20 @@ class UserTransactionService
             abort_if(!$transaction->update($transactionData), 500, 'an error occured please try again later');
 
             $user_deposit = $transaction->user->deposit;
-
+            // dd(!$user_deposit);
             //if the user has no deposit, add initial deposit
-            if (!$user_deposit) {
+            if (!$user_deposit->initial) {
                 $user_deposit->initial = $transaction->amount;
-                $user_deposit->total = $transaction->amount;
+                $user_deposit->total = ($user_deposit->total + $transaction->amount);
+                $user_deposit->save();
+            } else {
+                $amount = ($user_deposit->compunded + $transaction->amount);
+                $user_deposit->compounded = $amount;
+                $user_deposit->total += $amount;
                 $user_deposit->save();
             }
 
-            $amount = ($user_deposit->compunded + $transaction->amount);
-            $user_deposit->compunded = $amount;
-            $user_deposit->total += $amount;
-            $user_deposit->save();
+
 
             return $transaction->only(['id', 'status', 'initial', 'compounded', 'total', 'user', 'ImageUrl']);
         });
