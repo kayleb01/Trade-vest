@@ -14,7 +14,7 @@ class UserService
         return DB::transaction(function () use ($userData) {
             $user = User::create($userData);
             abort_if(!$user, 500, 'an error occured, please try again later');
-            $user->deposits()->create();
+            $user->deposit()->create();
             $user->earnings()->create();
             $user->withdrawals()->create();
             return $user;
