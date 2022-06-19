@@ -13,6 +13,9 @@ class UserTransactionService
 
         abort_if(!$deposit, 500, 'an error occured, please');
 
+        $user->proof = null;
+        $user->save();
+
         return $deposit->load('contract');
     }
 
