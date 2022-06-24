@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BtcAddressController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserTransactionController;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ Route::get('/migrate', function () {
 Route::post('register', [AuthController::class, 'register']);
     Route::get('contracts', [ContractController::class, 'index']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('contact', [ContactController::class, 'store']);
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('update-user', [AuthController::class, 'updateProfile']);
