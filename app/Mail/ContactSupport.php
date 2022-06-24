@@ -37,6 +37,7 @@ class ContactSupport extends Mailable
             'name' => $this->name,
             'email' => $this->email,
             'message' => $this->message,
-        ]);
+        ])
+        ->subject("Client Enquiry ". '('. $this->name . ')');
     }
 }
