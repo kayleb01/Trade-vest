@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BtcAddressController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserTransactionController;
+use App\Http\Controllers\Api\WalletAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +58,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user/{user}/transactions', [AdminController::class, 'userTransactions']);
 
     /**------------------- BTC Address ------------------------- */
-    Route::post('wallet/store', [BtcAddressController::class, 'store']);
-    Route::get('wallet/get-btc-address', [BtcAddressController::class, 'index']);
-    Route::put('wallet/update-address', [BtcAddressController::class, 'update']);
+    Route::post('wallet/store', [WalletAddressController::class, 'store']);
+    Route::get('wallet/get-btc-address', [WalletAddressController::class, 'index']);
+    Route::put('wallet/update-address', [WalletAddressController::class, 'update']);
 });

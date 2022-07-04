@@ -9,5 +9,11 @@ class BtcAddress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'wallet_address'];
+    protected $table = "btc_address";
+    protected $fillable = [
+        'id',
+        'btc_address',
+        'eth_address',
+        'usdt_address',
+    ];
 }

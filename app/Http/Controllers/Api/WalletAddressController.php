@@ -6,21 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BtcAddressRequest;
 use App\Http\Requests\UpdateBtcAddressRequest;
 use App\Models\BtcAddress;
-use Illuminate\Http\Request;
+use App\Models\WalletAddress;
 
-class BtcAddressController extends Controller
+class WalletAddressController extends Controller
 {
     public function store(BtcAddressRequest $request)
     {
-        if (BtcAddress::count() < 1) {
-            $address = BtcAddress::create($request->validated());
-        } else {
-            abort(403, 'wallet address already exists, please update address');
-        }
+        $id = 1;
+        $walletAddress = WalletAddress::updateOrCreate(
+            ['id' => $id],
+            $request->validated()
+        );
+
+        abort_if(!$walletAddress, 500, 'An error occured, please try again');
 
         return response()->json([
             'message' => 'wallet address added successfully',
-            'data' => $address->only('wallet_address')
+            'data' => $walletAddress->only('btc_address', 'eth_address', 'usdt_address')
         ]);
     }
 
@@ -28,7 +30,7 @@ class BtcAddressController extends Controller
     {
         return response()->json([
             'message' => 'wallet address fetched successfully',
-            'data' => BtcAddress::first()
+            'data' => WalletAddress::first()->only('btc_address', 'eth_address', 'usdt_address')
         ]);
     }
 

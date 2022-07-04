@@ -24,7 +24,9 @@ class BtcAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'wallet_address' => 'required|string'
+            'btc_address' => 'required|string',
+            'eth_address' => 'nullable|string',
+            'usdt_address' => 'nullable|string'
         ];
     }
 }
