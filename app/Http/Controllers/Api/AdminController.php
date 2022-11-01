@@ -25,7 +25,7 @@ class AdminController extends Controller
             ->with(['user_transactions' => function ($q) {
                 $q->latest();
             }])
-            ->paginate(20);
+            ->get();
 
         return response()->json(
             [
